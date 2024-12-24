@@ -1,0 +1,37 @@
+syntax = "proto3";
+option java_multiple_files = true;
+option java_package = "com.example.discount";
+option java_outer_classname = "DiscountProto";
+option optimize_for = SPEED;
+package discount;
+
+service DiscountBackendService {
+  rpc CheckDiscountEligibility(EligibilityRequest) returns (EligibilityResponse);
+}
+
+message EligibilityRequest {
+  string orderId = 1;
+}
+
+message EligibilityResponse {
+  bool isEligible = 1;
+}
+
+service DeliveryCalculationService {
+  rpc CalculateDelivery(DeliveryRequest) returns (DeliveryResponse);
+}
+
+message DeliveryRequest {
+  string orderId = 1;
+  double delivererLatitude = 2;
+  double delivererLongitude = 3;
+  double customerLatitude = 4;
+  double customerLongitude = 5;
+}
+
+message DeliveryResponse {
+  string orderId = 1;
+  double distance = 2;
+  uint32 estimatedTimeMinutes = 3;
+  uint32 estimatedTimeSeconds = 4;
+}
